@@ -8,4 +8,5 @@ Just another Django blog.
 
 ## Note
 It's my first django project and still in developing.
-In fact, this project is just beginning. I publish it on Github for stimulates me finish it ASAP.
+
+In fact, this project is just beginning. I publish it to Github for stimulates me to finish it ASAP.
