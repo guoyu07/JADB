@@ -9,7 +9,7 @@ from django.conf import settings
 class Category(models.Model):
     title = models.CharField(db_index=True, max_length=255)
     parent_id = models.PositiveIntegerField(
-        db_index=True, max_length=5, default=0)
+        db_index=True, default=0)
     alias = models.CharField(db_index=True, max_length=128)
 
     class Meta:

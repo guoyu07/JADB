@@ -20,10 +20,10 @@ class User(models.Model):
     role = models.PositiveSmallIntegerField(default=3)
     reg_time = models.DateTimeField(auto_now_add=True, db_index=True)
     reg_ip = models.GenericIPAddressField(
-        db_index=True, default=http.FetchClientIP())
+        db_index=True)
     log_time = models.DateTimeField(db_index=True)
     log_ip = models.GenericIPAddressField(
-        db_index=True, default=http.FetchClientIP())
+        db_index=True)
 
     class Meta:
         db_table = settings.DB_TABLE_PREFIX + 'user'

@@ -2,11 +2,21 @@
 # -*- coding: utf-8 -*-
 # -*- author: Jat -*-
 
-from article import libs
-from django.http import HttpResponse, HttpResponseNotFound
-from django.views.decorators.http import require_safe
+from django.http import HttpResponse
+
+from core.views import BaseView
 
 
-@require_safe
-def index(request):
-    return HttpResponse(html)
+class HomeView(BaseView):
+    def __init__(self):
+        pass
+
+    def dispatch(self, *args, **kwargs):
+        super(HomeView, self).__init__()
+        return super(HomeView, self).dispatch(*args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse(self.client_ip)
+
+    def post(self, request, *args, **kwargs):
+        return HttpResponse(self.scheme)

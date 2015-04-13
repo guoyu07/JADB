@@ -2,6 +2,16 @@
 # -*- coding: utf-8 -*-
 # -*- author: Jat -*-
 
+from IPy import IP
 
-def FetchClientIP():
-    pass
+
+def VerifyIP(ip):
+    try:
+        ip = IP(ip)
+    except ValueError:
+        return False
+
+    if ip.iptype() != 'PUBLIC':
+        return False
+
+    return ip

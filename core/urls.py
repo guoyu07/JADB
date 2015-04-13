@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # -*- author: Jat -*-
 
-from core.lib import utility
+from core.libs import utility
 from django.conf.urls import include, url
 
 urlpatterns = [

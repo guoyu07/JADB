@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # -*- author: Jat -*-
 
-from django.db.backends.mysql.creation import DatabaseCreation
+from django.db.backends.mysql.base import DatabaseWrapper
 from os import path
 import json
 import sys
@@ -34,12 +34,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
     'article',
     'category',
     'comment',
@@ -48,18 +42,12 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+
 )
 
 ROOT_URLCONF = 'core.urls'
 
-WSGI_APPLICATION = 'core.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 DATABASES = {
     'default': {
@@ -70,12 +58,14 @@ DATABASES = {
         'PORT': user_settings.get('db_port', '3306'),
         'OPTIONS': {
             'init_command': '''SET NAMES "utf8" COLLATE "utf8_general_ci";
-                            SET default_storage_engine=INNODB;
-                            CREATE DATABASE IF NOT EXISTS `{0}`
+                            SET default_storage_engine={0};
+                            CREATE DATABASE IF NOT EXISTS `{1}`
                             DEFAULT CHARACTER SET = "utf8"
                             DEFAULT COLLATE = "utf8_general_ci";
-                            USE `{0}`;'''.format(user_settings.get(
-                                'db_name', 'jadb'))
+                            USE `{1}`;'''.format(
+                                user_settings.get('db_engine', 'INNODB'),
+                                user_settings.get('db_name', 'jadb')
+                            )
         }
     }
 }
@@ -85,7 +75,7 @@ DB_TABLE_PREFIX = user_settings.get('db_table_prefix', 'jadb_')
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGE_CODE = 'zh-cn'
+LANGUAGE_CODE = 'zh-hans'
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -103,4 +93,4 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = path.join(BASE_DIR, 'static')
 
-DatabaseCreation.data_types['AutoField'] = 'integer UNSIGNED AUTO_INCREMENT'
+DatabaseWrapper._data_types['AutoField'] = 'integer UNSIGNED AUTO_INCREMENT'
