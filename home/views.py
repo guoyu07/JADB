@@ -1,22 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# -*- author: Jat -*-
+# -*- author: jat@sinosky.org -*-
 
 from django.http import HttpResponse
 
-from core.views import BaseView
+from core.view import BaseView as Base
 
 
-class HomeView(BaseView):
-    def __init__(self):
-        pass
-
-    def dispatch(self, *args, **kwargs):
-        super(HomeView, self).__init__()
-        return super(HomeView, self).dispatch(*args, **kwargs)
-
-    def get(self, request, *args, **kwargs):
+class HomeView(Base):
+    def get(self, *args, **kwargs):
         return HttpResponse(self.client_ip)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, *args, **kwargs):
         return HttpResponse(self.scheme)

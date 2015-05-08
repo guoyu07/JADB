@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# -*- author: Jat -*-
+# -*- author: jat@sinosky.org -*-
 
-from django.db import models
-from django.conf import settings
+from core.model import BaseModel as Base
 
 
-class Commit(models.Model):
-    user_id = models.PositiveIntegerField(db_index=True)
-    created_time = models.DateTimeField(db_index=True, auto_now_add=True)
-    content = models.TextField()
+class Commit(Base):
+    user_id = Base.models.PositiveIntegerField(db_index=True)
+    created_time = Base.models.DateTimeField(db_index=True, auto_now_add=True)
+    content = Base.models.TextField()
 
-    class Meta:
-        db_table = settings.DB_TABLE_PREFIX + 'commit'
+    class Meta(Base.Meta):
+        db_table = Base.settings.DB_TABLE_PREFIX + 'commit'

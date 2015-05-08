@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# -*- author: Jat -*-
+# -*- author: jat@sinosky.org -*-
 
 from django.conf.urls import url
 

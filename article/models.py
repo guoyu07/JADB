@@ -1,25 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# -*- author: Jat -*-
+# -*- author: jat@sinosky.org -*-
 
 from datetime import datetime
-from django.conf import settings
-from django.db import models
+
+from core.model import BaseModel as Base
 
 
-class Article(models.Model):
-    user_id = models.PositiveIntegerField(db_index=True)
-    title = models.CharField(db_index=True, max_length=255)
-    category_id = models.PositiveIntegerField(db_index=True)
-    created_time = models.DateTimeField(db_index=True, auto_now_add=True)
-    modified_time = models.DateTimeField(db_index=True)
-    content = models.TextField()
-    draft = models.PositiveSmallIntegerField(default=0)
-    views = models.PositiveIntegerField(db_index=True)
+class Article(Base):
+    user_id = Base.models.PositiveIntegerField(db_index=True)
+    title = Base.models.CharField(db_index=True, max_length=255)
+    created_time = Base.models.DateTimeField(db_index=True, auto_now_add=True)
+    modified_time = Base.models.DateTimeField(db_index=True)
+    content = Base.models.TextField()
+    draft = Base.models.PositiveSmallIntegerField(db_index=True, default=0)
+    views = Base.models.PositiveIntegerField(db_index=True, default=0)
 
     def save(self, *args, **kwargs):
         self.modified_time = datetime.today()
-        return super(User, self).save(*args, **kwargs)
+        return super(Article, self).save(*args, **kwargs)
 
-    class Meta:
-        db_table = settings.DB_TABLE_PREFIX + 'article'
+    class Meta(Base.Meta):
+        db_table = Base.settings.DB_TABLE_PREFIX + 'article'
