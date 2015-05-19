@@ -22,4 +22,4 @@ class User(Base):
     log_ip = Base.models.GenericIPAddressField(db_index=True)
 
     class Meta(Base.Meta):
-        db_table = Base.settings.DB_TABLE_PREFIX + 'user'
+        db_table = Base.Core.settings.DB_TABLE_PREFIX + 'user'

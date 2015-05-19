@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # -*- author: jat@sinosky.org -*-
 
-from datetime import datetime
+from django.utils import timezone
 
 from core.model import BaseModel as Base
 
@@ -17,8 +17,8 @@ class Article(Base):
     views = Base.models.PositiveIntegerField(db_index=True, default=0)
 
     def save(self, *args, **kwargs):
-        self.modified_time = datetime.today()
+        self.modified_time = timezone.now()
         return super(Article, self).save(*args, **kwargs)
 
     class Meta(Base.Meta):
-        db_table = Base.settings.DB_TABLE_PREFIX + 'article'
+        db_table = Base.Core.settings.DB_TABLE_PREFIX + 'article'

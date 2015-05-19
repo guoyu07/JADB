@@ -34,12 +34,14 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
-
+    'django.contrib.sessions.middleware.SessionMiddleware',
 )
 
 ROOT_URLCONF = 'core.urls'
 
 WSGI_APPLICATION = 'wsgi.application'
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_SCHEME', 'https')
 
 DATABASES = {
     'default': {
@@ -57,7 +59,7 @@ DATABASES = {
                             DEFAULT COLLATE = "utf8_general_ci";
 
                             USE `{1}`;'''.format(
-                                user_settings.get('db_engine', 'MyISAM'),
+                                user_settings.get('db_engine', 'InnoDB'),
                                 user_settings.get('db_name', 'jadb')
                             )
         }
@@ -81,3 +83,25 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = os.path.join(BASE_DIR, 'static')
 
 ALLOWED_CHARACTERS = '[a-zA-Z0-9_@\+\.-]+'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': '%s' % user_settings.get(
+            'redis_location', 'redis://127.0.0.1:6379/1'),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient'
+        }
+    }
+}
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+SESSION_COOKIE_AGE = user_settings.get('session_cookie_age', 2419200)
+SESSION_COOKIE_DOMAIN = user_settings.get('session_cookie_domain', None)
+SESSION_COOKIE_HTTPONLY = user_settings.get('session_cookie_httponly', True)
+SESSION_COOKIE_NAME = user_settings.get(
+    'session_cookie_name', 'jadb_sessionid')
+SESSION_COOKIE_PATH = user_settings.get('session_cookie_path', '/')
+SESSION_COOKIE_SECURE = user_settings.get('session_cookie_secure', True)

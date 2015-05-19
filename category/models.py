@@ -11,4 +11,4 @@ class Category(Base):
     alias = Base.models.CharField(db_index=True, max_length=128)
 
     class Meta(Base.Meta):
-        db_table = Base.settings.DB_TABLE_PREFIX + 'category'
+        db_table = Base.Core.settings.DB_TABLE_PREFIX + 'category'

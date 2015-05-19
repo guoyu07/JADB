@@ -14,4 +14,4 @@ def VerifyIP(ip):
     if ip.iptype() != 'PUBLIC':
         return False
 
-    return ip
+    return str(ip)

@@ -7,7 +7,7 @@ from django.db import models
 from core import Core
 
 
-class BaseModel(models.Model, Core):
+class BaseModel(Core, models.Model):
     models = models
     Core = Core
 

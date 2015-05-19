@@ -11,4 +11,4 @@ class Commit(Base):
     content = Base.models.TextField()
 
     class Meta(Base.Meta):
-        db_table = Base.settings.DB_TABLE_PREFIX + 'commit'
+        db_table = Base.Core.settings.DB_TABLE_PREFIX + 'commit'

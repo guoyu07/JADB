@@ -2,33 +2,42 @@
 # -*- coding: utf-8 -*-
 # -*- author: jat@sinosky.org -*-
 
-from django.views.generic import View
+from django.http import HttpResponseBadRequest
+from django.utils import timezone
 
 from core import Core
 from core.libs import http
 
+from user.libs import mark_online
 
-class BaseView(View, Core):
+
+class BaseView(Core):
     Core = Core
 
-    def dispatch(self, *args, **kwargs):
-        self.client_ip = http.VerifyIP(self.request.META['REMOTE_ADDR'])
+    def dispatch(self, request, *args, **kwargs):
+        request.client_ip = http.VerifyIP(request.META['REMOTE_ADDR']) or \
+            http.VerifyIP(request.META.get('HTTP_X_REAL_IP', '')) or \
+            http.VerifyIP(request.META.get(
+                'HTTP_X_FORWARDED_FOR', '').split(',')[-1]) or \
+            HttpResponseBadRequest()
 
-        if self.client_ip is False:
-            self.client_ip = http.VerifyIP(self.request.META.get(
-                'HTTP_X_REAL_IP', ''))
+        request.user_agent = request.META.get(
+            'HTTP_USER_AGENT', '').strip() or HttpResponseBadRequest()
 
-        if self.client_ip is False:
-            self.client_ip = http.VerifyIP(self.request.META.get(
-                'HTTP_X_FORWARDED_FOR', '').split(',')[-1])
+        sessionid = request.COOKIES.get(
+            self.settings.SESSION_COOKIE_NAME, None)
 
-        if self.client_ip is False:
-            self.client_ip = '0.0.0.0'
+        if sessionid is None or not request.session.exists(sessionid):
+            request.session['ip'] = request.client_ip
+            request.session['ua'] = request.user_agent
+        else:
+            ip = request.session.get('ip', None)
+            ua = request.session.get('ua', None)
 
-        self.scheme = self.request.META.get(
-            'HTTP_X_SCHEME', '').strip() or self.request.scheme
+            if ip == request.client_ip and ua == request.user_agent:
+                request.session['last_activity'] = timezone.now()
+                mark_online(sessionid)
+            else:
+                request.session.flush()
 
-        if self.scheme not in ('http', 'https'):
-            self.scheme = 'http'
-
-        return super(BaseView, self).dispatch(*args, **kwargs)
+        return super(BaseView, self).dispatch(request, *args, **kwargs)

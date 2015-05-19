@@ -27,6 +27,6 @@ class Option(Base):
         options = {}
 
         for option in Admin.objects.all():
-            options[option['name']] = option['value']
+            options[option.name] = option.value
 
         Base.Core.options = options
