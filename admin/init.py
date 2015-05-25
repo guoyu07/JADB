@@ -5,18 +5,16 @@
 from django.apps import AppConfig
 
 from core import Core
+from core.libs.install import install_options
+from admin.libs import load_options
 
 
 class Initialize(Core, AppConfig):
     name = 'admin'
 
     def ready(self):
-        from core.install import Install
-        from admin.libs import Option
-
-        install = Install()
-
         if self.installation_status == -1:
-            install.install_options()
+            install_options()
+            Core.installation_status = 0
 
-        Option().load_options()
+        load_options()

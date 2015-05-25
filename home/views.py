@@ -6,13 +6,10 @@ from django.views.generic import View
 from django.http import HttpResponse
 
 from core.view import BaseView as Base
-from user.libs import count_online_users
+from user.libs.online import count_online_users
 
 
 class HomeView(Base, View):
     def get(self, request, *args, **kwargs):
-        print count_online_users()
-        return HttpResponse(request.client_ip)
-
-    def post(self, *args, **kwargs):
-        return HttpResponse(request.scheme)
+        online_users = count_online_users()
+        return HttpResponse(online_users)

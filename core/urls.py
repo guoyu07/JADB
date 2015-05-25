@@ -8,5 +8,6 @@ from django.conf.urls import include, url
 
 urlpatterns = [
     #url(r'^%s\.html$' % settings.ALLOWED_CHARACTERS, include('article.urls')),
+    url(r'^captcha/$', include('captcha.urls')),
     url('', include('home.urls'))
 ]

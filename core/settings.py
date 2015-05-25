@@ -7,10 +7,10 @@ import os
 import sys
 
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 try:
-    f = open(os.path.join(os.path.dirname(BASE_DIR), 'config.json'))
+    f = open(os.path.join(BASE_DIR, 'config.json'))
 except IOError, e:
     sys.exit('Open configuration file error: %s' % e)
 else:
@@ -51,12 +51,12 @@ DATABASES = {
         'HOST': user_settings.get('db_host', '127.0.0.1'),
         'PORT': user_settings.get('db_port', '3306'),
         'OPTIONS': {
-            'init_command': '''SET NAMES "utf8" COLLATE "utf8_general_ci";
+            'init_command': '''SET NAMES 'utf8' COLLATE 'utf8_general_ci';
                             SET default_storage_engine={0};
 
                             CREATE DATABASE IF NOT EXISTS `{1}`
-                            DEFAULT CHARACTER SET = "utf8"
-                            DEFAULT COLLATE = "utf8_general_ci";
+                            DEFAULT CHARACTER SET = 'utf8'
+                            DEFAULT COLLATE = 'utf8_general_ci';
 
                             USE `{1}`;'''.format(
                                 user_settings.get('db_engine', 'InnoDB'),
@@ -78,7 +78,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
+STATIC_URL = user_settings.get('static_url', '/static/')
 
 STATICFILES_DIRS = os.path.join(BASE_DIR, 'static')
 
@@ -101,7 +101,6 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 SESSION_COOKIE_AGE = user_settings.get('session_cookie_age', 2419200)
 SESSION_COOKIE_DOMAIN = user_settings.get('session_cookie_domain', None)
 SESSION_COOKIE_HTTPONLY = user_settings.get('session_cookie_httponly', True)
-SESSION_COOKIE_NAME = user_settings.get(
-    'session_cookie_name', 'jadb_sessionid')
+SESSION_COOKIE_NAME = user_settings.get('session_cookie_name', 'jadb_sessionid')
 SESSION_COOKIE_PATH = user_settings.get('session_cookie_path', '/')
 SESSION_COOKIE_SECURE = user_settings.get('session_cookie_secure', True)

@@ -2,31 +2,32 @@
 # -*- coding: utf-8 -*-
 # -*- author: jat@sinosky.org -*-
 
-from core.lib import BaseLib as Base
+from core import Core
 from admin.models import Admin
 
 
-class Option(Base):
-    def insert_options(self, options):
-        for name, value in options.items():
-            Admin.objects.get_or_create(name=name, defaults={
-                'value': value
-            })
+def insert_options(options):
+    for name, value in options.items():
+        Admin.objects.get_or_create(name=name, defaults={
+            'value': value
+        })
 
-            Base.Core.options['name'] = value
+        Core.options['name'] = value
 
-    def update_options(self, options):
-        for name, value in options.items():
-            Admin.objects.update_or_create(name=name, defaults={
-                'value': value
-            })
 
-            Base.Core.options['name'] = value
+def update_options(options):
+    for name, value in options.items():
+        Admin.objects.update_or_create(name=name, defaults={
+            'value': value
+        })
 
-    def load_options(self):
-        options = {}
+        Core.options['name'] = value
 
-        for option in Admin.objects.all():
-            options[option.name] = option.value
 
-        Base.Core.options = options
+def load_options():
+    options = {}
+
+    for option in Admin.objects.all():
+        options[option.name] = option.value
+
+    Core.options = options

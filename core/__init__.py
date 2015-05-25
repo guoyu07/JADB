@@ -16,6 +16,3 @@ class Core(object):
     installation_status = None
     need_update = False
     version = os.environ['JADB_VERSION'].split(' ')
-
-    def get_table(self, table):
-        return self.settings.DB_TABLE_PREFIX + table

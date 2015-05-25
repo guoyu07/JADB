@@ -3,15 +3,18 @@
 # -*- author: jat@sinosky.org -*-
 
 
-def VerifyIP(ip):
+def verify_ip(ip, allow_private_addr=False):
     from IPy import IP
+
+    if not ip:
+        return False
 
     try:
         ip = IP(ip)
     except ValueError:
         return False
 
-    if ip.iptype() != 'PUBLIC':
+    if allow_private_addr is False and ip.iptype() != 'PUBLIC':
         return False
 
     return str(ip)
