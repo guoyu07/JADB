@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="{{ language_code }}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}{% if show_extended_title %} - {{ site_options['site_name'] }}{% endif %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ static('css/bootstrap.min.css') }}" />
+</head>
+<body>
+    {% block content %}{% endblock %}
+</body>
+</html>

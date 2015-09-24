@@ -1,6 +1,10 @@
+bcrypt
 Django
+django-jinja
 django-redis
 IPy
+Jinja2
 mysqlclient
 pytz
+redis
 uwsgi

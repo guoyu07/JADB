@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# -*- author: jat@sinosky.org -*-
+# -*- author: marco@cruncher.ch -*-
+# -*- source: https://github.com/mbi/django-simple-captcha -*-
 
 import os
 import random
 from cStringIO import StringIO
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
-from core import Core
+from django.contrib.staticfiles.finders import find
 
 
 def _getsize(font, text):
@@ -15,7 +16,7 @@ def _getsize(font, text):
 
 
 def generate_image(text):
-    font = ImageFont.truetype(os.path.join(Core.settings.STATICFILES_DIRS, 'fonts', 'Vera.ttf'), 22)
+    font = ImageFont.truetype(find(os.path.join('fonts', 'Vera.ttf')), 22)
 
     size = _getsize(font, text)
     size = (size[0] * 2, int(size[1] * 1.4))

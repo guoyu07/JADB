@@ -10,5 +10,5 @@ class Category(Base):
     parent_id = Base.models.PositiveIntegerField(db_index=True, default=0)
     alias = Base.models.CharField(db_index=True, max_length=128)
 
-    class Meta(Base.Meta):
+    class Meta:
         db_table = Base.Core.settings.DB_TABLE_PREFIX + 'category'

@@ -21,16 +21,19 @@ SECRET_KEY = user_settings.get('secret_key', '')
 
 DEBUG = user_settings.get('debug', False)
 
-TEMPLATE_DEBUG = user_settings.get('debug', False)
+ALLOWED_HOSTS = [
+    '*',
+]
 
 INSTALLED_APPS = (
+    'django.contrib.staticfiles',
     'core',
     'admin',
     'user',
     'article',
     'comment',
     'category',
-    'tag'
+    'tag',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -41,7 +44,10 @@ ROOT_URLCONF = 'core.urls'
 
 WSGI_APPLICATION = 'wsgi.application'
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_SCHEME', 'https')
+SECURE_PROXY_SSL_HEADER = (
+    'HTTP_X_SCHEME',
+    'https',
+)
 
 DATABASES = {
     'default': {
@@ -61,14 +67,14 @@ DATABASES = {
                             USE `{1}`;'''.format(
                                 user_settings.get('db_engine', 'InnoDB'),
                                 user_settings.get('db_name', 'jadb')
-                            )
-        }
-    }
+                            ),
+        },
+    },
 }
 
 DB_TABLE_PREFIX = user_settings.get('db_table_prefix', 'jadb_')
 
-LANGUAGE_CODE = 'zh-hans'
+LANGUAGE_CODE = user_settings.get('language_code', 'en-us')
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -80,19 +86,35 @@ USE_TZ = True
 
 STATIC_URL = user_settings.get('static_url', '/static/')
 
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
-ALLOWED_CHARACTERS = '[a-zA-Z0-9_@\+\.-]+'
+TEMPLATES = [
+    {
+        'BACKEND': 'django_jinja.backend.Jinja2',
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+        ],
+        'OPTIONS': {
+            'match_extension': '.html',
+            'autoescape': True,
+            'auto_reload': DEBUG,
+            'translation_engine': 'django.utils.translation',
+        },
+    },
+]
 
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': '%s' % user_settings.get(
-            'redis_location', 'redis://127.0.0.1:6379/1'),
+            'redis_location', 'redis://127.0.0.1:6379/1'
+        ),
         'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient'
-        }
-    }
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        },
+    },
 }
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
@@ -104,3 +126,13 @@ SESSION_COOKIE_HTTPONLY = user_settings.get('session_cookie_httponly', True)
 SESSION_COOKIE_NAME = user_settings.get('session_cookie_name', 'jadb_sessionid')
 SESSION_COOKIE_PATH = user_settings.get('session_cookie_path', '/')
 SESSION_COOKIE_SECURE = user_settings.get('session_cookie_secure', True)
+
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.SHA1PasswordHasher',
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+    'django.contrib.auth.hashers.CryptPasswordHasher',
+)

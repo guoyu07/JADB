@@ -8,5 +8,5 @@ from captcha.views import CaptchaView
 
 
 urlpatterns = [
-    url('', CaptchaView.as_view())
+    url(r'^$', CaptchaView.as_view())
 ]

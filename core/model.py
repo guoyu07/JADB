@@ -11,5 +11,5 @@ class BaseModel(Core, models.Model):
     models = models
     Core = Core
 
-    class Meta(object):
+    class Meta:
         abstract = True

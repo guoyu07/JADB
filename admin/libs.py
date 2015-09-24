@@ -9,7 +9,7 @@ from admin.models import Admin
 def insert_options(options):
     for name, value in options.items():
         Admin.objects.get_or_create(name=name, defaults={
-            'value': value
+            'value': value,
         })
 
         Core.options['name'] = value
@@ -18,7 +18,7 @@ def insert_options(options):
 def update_options(options):
     for name, value in options.items():
         Admin.objects.update_or_create(name=name, defaults={
-            'value': value
+            'value': value,
         })
 
         Core.options['name'] = value

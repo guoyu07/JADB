@@ -20,5 +20,5 @@ class Article(Base):
         self.modified_time = timezone.now()
         return super(Article, self).save(*args, **kwargs)
 
-    class Meta(Base.Meta):
+    class Meta:
         db_table = Base.Core.settings.DB_TABLE_PREFIX + 'article'

@@ -41,7 +41,7 @@ def version_compare(version1, version2):
     return 0
 
 
-def random_char(length=4):
+def random_char(length=4, symbol=False):
     import string
     try:
         from random import SystemRandom
@@ -50,4 +50,8 @@ def random_char(length=4):
     except ImportError:
         import random
 
-    return ''.join(random.choice(string.ascii_letters + string.digits) for i in xrange(length))
+    chars = string.ascii_letters + string.digits
+    if symbol is True:
+        chars += '!$%@#'
+
+    return ''.join(random.choice(chars) for i in xrange(length))

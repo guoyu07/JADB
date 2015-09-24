@@ -10,5 +10,5 @@ class Commit(Base):
     created_time = Base.models.DateTimeField(db_index=True, auto_now_add=True)
     content = Base.models.TextField()
 
-    class Meta(Base.Meta):
+    class Meta:
         db_table = Base.Core.settings.DB_TABLE_PREFIX + 'commit'

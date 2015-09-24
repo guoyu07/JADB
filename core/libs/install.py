@@ -15,7 +15,7 @@ def get_installation_status():
     cursor = connection.cursor()
 
     try:
-        cursor.execute('SELECT value FROM %s WHERE name = "jadb_version"' % Core.settings.DB_TABLE_PREFIX + 'options')
+        cursor.execute('SELECT value FROM %soptions WHERE name = "jadb_version"' % Core.settings.DB_TABLE_PREFIX)
     except Exception:
         return -2
 
@@ -40,9 +40,10 @@ def install_options():
     from admin.libs import insert_options, update_options
 
     insert_options({
-        'site_name': 'DAJB'
+        'site_name': 'JADB',
+        'site_description': 'Just Another Django Blog',
     })
 
     update_options({
-        'jadb_version': Core.version[0]
+        'jadb_version': Core.version[0],
     })
