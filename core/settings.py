@@ -76,7 +76,7 @@ DB_TABLE_PREFIX = user_settings.get('db_table_prefix', 'jadb_')
 
 LANGUAGE_CODE = user_settings.get('language_code', 'en-us')
 
-TIME_ZONE = 'Asia/Shanghai'
+TIME_ZONE = user_settings.get('time_zone', 'UTC')
 
 USE_I18N = True
 

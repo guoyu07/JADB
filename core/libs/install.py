@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 # -*- author: jat@sinosky.org -*-
 
+from picklefield.fields import dbsafe_decode
+
 from core import Core
 
 
 def get_installation_status():
-    import pickle
-
     from django.db import connection
 
     from core.libs.utility import version_compare
@@ -23,7 +23,7 @@ def get_installation_status():
     if version is None:
         return -2
 
-    version = pickle.loads(version[0])
+    version = dbsafe_decode(version[0])
     if version_compare(version, Core.version[0]) != 0:
         return -2
 

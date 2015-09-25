@@ -1,6 +1,7 @@
 bcrypt
 Django
 django-jinja
+django-picklefield
 django-redis
 IPy
 Jinja2
