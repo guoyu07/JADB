@@ -2,13 +2,12 @@
 # -*- coding: utf-8 -*-
 # -*- author: jat@sinosky.org -*-
 
-from picklefield.fields import dbsafe_decode
-
 from core import Core
 
 
 def get_installation_status():
     from django.db import connection
+    from picklefield.fields import dbsafe_decode
 
     from core.libs.utility import version_compare
 

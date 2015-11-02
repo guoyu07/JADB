@@ -1,12 +1,1 @@
-# JADB
-Just another Django blog.
-
-## Installation
-```
-[sudo] pip install -Ur requirements.txt
-```
-
-## Note
-It's my first django project and still in developing.
-
-In fact, this project is just beginning. I publish it to GitHub for stimulates me to finish it ASAP.
+Django is so bloat and hard to customization. I am tired to write monkey patch. So this project will not update. I will learn another Python web framework (may be Tornado or Flask) to write my blog.

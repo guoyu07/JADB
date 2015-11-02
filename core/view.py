@@ -86,16 +86,16 @@ class BaseView(Core):
     def get_redirect_uri(self):
         redirect = self.request.POST.get('redirect')
 
-        # The redirect uri should not be a external link.
+        # A redirect uri should not be a external link.
         if not redirect or redirect[0:4] == 'http' or redirect[0:2] == '//':
             redirect = ''
 
         return redirect
 
     def render_to_response(self, *args, **kwargs):
+        # The default context.
         context = {
             'site_options': self.options,
-            'show_extended_title': True,
             'language_code': get_language().split('-')[0] or 'en',
         }
 

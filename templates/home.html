@@ -1,7 +1,12 @@
 {% extends 'global.html' %}
 
-{% block title %}{{ site_options['site_name'] }} - {{ site_options['site_description'] }}{% endblock %}
+{% set page = 'home' %}
+
+{% set keywords = site_options['meta_keywords'] or [] %}
+{% set description = site_options['meta_description'] or '' %}
+
+{% set title = site_options['site_name'] %}
 
 {% block content %}
 
-{% endblock %}
+{% endblock content %}
